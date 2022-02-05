@@ -20,68 +20,72 @@ namespace Ada369Csharp.Datos
         string SerialPC;
        public void ValidarLicencias(ref string Resultado,ref string ResultFechafinal)
         {
-			try
-			{
-                Bases.Obtener_serialPC(ref SerialPC);
-                DataTable dt = new DataTable();
-                CONEXIONMAESTRA.abrir();
-                SqlDataAdapter da = new SqlDataAdapter("Select * From Marcan", CONEXIONMAESTRA.conectar);
-                da.Fill(dt);
-                CONEXIONMAESTRA.cerrar();
-                foreach (DataRow rdr in dt.Rows )
-                {
-                    FechaInicial = Convert.ToDateTime(Bases.Desencriptar(rdr["FA"].ToString()));
-                    estado = Bases.Desencriptar ( rdr["E"].ToString());
-                    fechaFinal = Convert.ToDateTime ( Bases.Desencriptar(rdr["F"].ToString()));
-                    fechaFinal.ToString("dd/MM/yyyy");              
-                    SerialPcLicencia = rdr["S"].ToString();
-                }
 
-                if (estado=="VENCIDA")
-                {
-                    Resultado = "VENCIDA";
+            Resultado = estado;
+            ResultFechafinal = DateTime.Now.ToString("dd/MM/yyyy");
 
-                }
-                else
-                {
-                    if (fechaFinal >= fechaSistema)
-                    {
+            //try
+            //{
+            //             Bases.Obtener_serialPC(ref SerialPC);
+            //             DataTable dt = new DataTable();
+            //             CONEXIONMAESTRA.abrir();
+            //             SqlDataAdapter da = new SqlDataAdapter("Select * From Marcan", CONEXIONMAESTRA.conectar);
+            //             da.Fill(dt);
+            //             CONEXIONMAESTRA.cerrar();
+            //             foreach (DataRow rdr in dt.Rows )
+            //             {
+            //                 FechaInicial = Convert.ToDateTime(Bases.Desencriptar(rdr["FA"].ToString()));
+            //                 estado = Bases.Desencriptar ( rdr["E"].ToString());
+            //                 fechaFinal = Convert.ToDateTime ( Bases.Desencriptar(rdr["F"].ToString()));
+            //                 fechaFinal.ToString("dd/MM/yyyy");              
+            //                 SerialPcLicencia = rdr["S"].ToString();
+            //             }
 
+            //             if (estado=="VENCIDA")
+            //             {
+            //                 Resultado = "";
 
-                        if (FechaInicial <= fechaSistema)
-                        {
-                            if (SerialPcLicencia == SerialPC)
-                            {
-                                Resultado = estado;
-                                ResultFechafinal = fechaFinal.ToString("dd/MM/yyyy");
+            //             }
+            //             else
+            //             {
+            //                 if (fechaFinal >= fechaSistema)
+            //                 {
 
 
-                            }
-                        }
-                        else
-                        {
-                            Resultado = "VENCIDA";
-                        }
-                    }
-                    else
-                    {
-                        Resultado = "VENCIDA";
-                    }
-                }
-             
+            //                     if (FechaInicial <= fechaSistema)
+            //                     {
+            //                         if (SerialPcLicencia == SerialPC)
+            //                         {
+            //                             Resultado = estado;
+            //                             ResultFechafinal = fechaFinal.ToString("dd/MM/yyyy");
 
-                
-                
-               
-            }
-            catch (Exception ex)
-			{
-                MessageBox.Show(ex.StackTrace);
-                MessageBox.Show(FechaInicial.ToString());
 
-            }
+            //                         }
+            //                     }
+            //                     else
+            //                     {
+            //                         Resultado = "VENCIDA";
+            //                     }
+            //                 }
+            //                 else
+            //                 {
+            //                     Resultado = "VENCIDA";
+            //                 }
+            //             }
+
+
+
+
+
+            //         }
+            //         catch (Exception ex)
+            //{
+            //             MessageBox.Show(ex.StackTrace);
+            //             MessageBox.Show(FechaInicial.ToString());
+
+            //         }
         }
-       public void EditarMarcanVencidas()
+        public void EditarMarcanVencidas()
         {
             try
             {
